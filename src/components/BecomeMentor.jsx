@@ -49,7 +49,7 @@ const BecomeMentor = () => {
             <div className="space-y-6 text-center lg:text-left">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 px-4 py-1.5 text-xs font-bold tracking-wider text-zinc-800 dark:text-zinc-300 uppercase border border-zinc-200 dark:border-zinc-700">
                 <Sparkles className="h-3.5 w-3.5 text-cyan-500 animate-pulse" />
-                Join the Elite
+                Join the Service
               </span>
 
               <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.1]">
