@@ -128,3 +128,11 @@
     @apply font-sans;
   }
 }
+
+.hero-banner-slider .swiper-pagination-bullet {
+  @apply bg-zinc-400 opacity-50;
+}
+
+.hero-banner-slider .swiper-pagination-bullet-active {
+  @apply !bg-cyan-500 opacity-100 !w-5 !rounded-xs;
+}

@@ -1,9 +1,12 @@
+import Banner from "@/components/Banner";
+import AvailableTutors from "@/components/AvailableTutors";
 
 
 export default function Home() {
   return (
     <div>
-      Homie
+      <Banner></Banner>
+      <AvailableTutors></AvailableTutors>
     </div>
   );
 }

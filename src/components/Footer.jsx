@@ -4,12 +4,12 @@ import { MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
 import { FaFacebook, FaXTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa6';
 
 const Footer = () => {
+
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="w-full border-t border-zinc-200/50 bg-white/70 dark:border-zinc-800/50 dark:bg-zinc-950/70">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-12 text-center lg:text-left">
 
@@ -27,7 +27,6 @@ const Footer = () => {
               The premier tutor booking platform. Simplifying learning by connecting students with expert educators effortlessly.
             </p>
 
-            {/* Social Links */}
             <div className="flex items-center justify-center lg:justify-start space-x-4 pt-2 w-full">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-zinc-100 text-zinc-600 hover:bg-cyan-50 hover:text-cyan-600 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-cyan-950/50 dark:hover:text-cyan-400 transition-all duration-300 transform hover:-translate-y-1">
                 <FaFacebook className="h-4 w-4" />
@@ -48,12 +47,11 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 2. Tutor / Learning Services Links */}
           <div className="flex flex-col items-center lg:items-start">
             <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider mb-5">
               Learning Services
             </h3>
-            <ul className="space-y-3 w-full max-w-[200px] lg:max-w-none">
+            <ul className="space-y-3 w-full max-w-50 lg:max-w-none">
               {['Academic Tutoring', 'Language Courses', 'Test Preparation', 'Skill Development', 'Online Sessions'].map((item) => (
                 <li key={item} className="flex justify-center lg:justify-start">
                   <Link
@@ -70,12 +68,11 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 3. Quick Links */}
           <div className="flex flex-col items-center lg:items-start">
             <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider mb-5">
               Quick Links
             </h3>
-            <ul className="space-y-3 w-full max-w-[200px] lg:max-w-none">
+            <ul className="space-y-3 w-full max-w-50 lg:max-w-none">
               {['About Us', 'Find a Tutor', 'Become a Tutor', 'Pricing & Plans', 'FAQ'].map((item) => (
                 <li key={item} className="flex justify-center lg:justify-start">
                   <Link
@@ -115,7 +112,6 @@ const Footer = () => {
 
         </div>
 
-        {/* Bottom Section: Copyright */}
         <div className="pt-8 border-t border-zinc-200/50 dark:border-zinc-800/50 flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0 text-center lg:text-left">
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
             &copy; {currentYear} MediQueue. All rights reserved.
