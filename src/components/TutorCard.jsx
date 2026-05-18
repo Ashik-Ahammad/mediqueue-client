@@ -4,7 +4,7 @@ import { MapPin, BookOpen, Clock, GraduationCap, Briefcase, Monitor, ArrowUpRigh
 import { Card } from '@/components/ui/card';
 
 const TutorCard = ({ tutor }) => {
-  
+
   const {
     _id, tutorName, imageUrl, subject,
     hourlyFee, location, teachingMode,
@@ -74,7 +74,7 @@ const TutorCard = ({ tutor }) => {
             href={`/tutors/${_id}`}
             className="flex items-center gap-1.5 text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors group/btn"
           >
-            Details
+            Book Session
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
           </Link>
         </div>

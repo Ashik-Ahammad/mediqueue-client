@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import TutorCard from '@/components/TutorCard'; 
+import TutorCard from '@/components/TutorCard';
 
 const FeaturedTutors = async () => {
   const res = await fetch("http://localhost:8000/featured-tutors", {
@@ -17,6 +17,7 @@ const FeaturedTutors = async () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-5">
+          
           <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 px-3.5 py-1.5 text-xs font-bold tracking-wider text-cyan-700 dark:text-cyan-400 uppercase border border-cyan-200/60 dark:border-cyan-500/20 shadow-sm">
             <Sparkles className="h-3.5 w-3.5" />
             Featured Mentors

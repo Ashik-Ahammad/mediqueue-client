@@ -17,7 +17,7 @@ const AllTutorsPage = async () => {
 
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-zinc-900 dark:text-zinc-50">
-            Explore Our <span className="font-semibold text-transparent bg-clip-text bg-linear-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500">Premium Tutors</span>
+            Explore Our <span className="font-semibold text-transparent bg-clip-text bg-linear-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500">Expert Tutors</span>
           </h1>
           <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-relaxed">
             Discover highly qualified mentors tailored to your learning needs. Hover over a profile to see their availability and credentials.

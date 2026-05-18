@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Mediqueue",
+  title: "MediQueue",
   description: "Best Tutor Finding App in Bangladesh",
 };
 
