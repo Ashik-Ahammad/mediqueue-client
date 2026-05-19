@@ -1,48 +1,50 @@
-'use client';
-import React from 'react';
-import Link from 'next/link';
-import { Mail, Lock } from 'lucide-react';
+"use client";
+import React from "react";
+import Link from "next/link";
+import { Mail, Lock } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import Lottie from "lottie-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import loginAnimation from "../../../../public/assets/login.json";
-import { authClient } from '@/lib/auth-client';
-import { toast } from 'sonner';
-import { redirect } from 'next/navigation';
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const LoginPage = () => {
 
   const handleLogin = async (e) => {
-
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const userData = Object.fromEntries(formData.entries());
 
     const { data, error } = await authClient.signIn.email({
-          email: userData.email,
-          password: userData.password,
-        });
+      email: userData.email,
+      password: userData.password,
+    });
 
-        if (data) {
-          toast.success("Logged in successfully!");
-          redirect("/");
-        }
-        if (error) {
-          toast.error(error.message);
-        }
+    if (data) {
+      toast.success("Logged in successfully!");
+      if (window.history.length > 2) {
+        router.back();
+      } else {
+        router.push("/");
+      }
+    }
+    if (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleGoogleLogin = async () => {
-
     try {
+      toast.loading("Redirecting to Google...");
+
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/",
       });
-
     } catch (error) {
       console.error("Google Login Error:", error);
       toast.error("Failed to connect with Google.");
@@ -52,7 +54,6 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-zinc-50 dark:bg-zinc-950">
       <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white dark:bg-zinc-900 rounded-[2rem] shadow-sm border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-
         <div className="hidden md:flex md:w-1/2 bg-zinc-50/50 dark:bg-zinc-950/50 p-12 items-center justify-center border-r border-zinc-100 dark:border-zinc-800">
           <Lottie
             animationData={loginAnimation}
@@ -63,13 +64,22 @@ const LoginPage = () => {
 
         <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center">
           <div className="mb-8 text-center md:text-left">
-            <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">Welcome Back</h2>
-            <p className="text-zinc-500 dark:text-zinc-400 text-sm">Please sign in to your account to continue.</p>
+            <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+              Welcome Back
+            </h2>
+            <p className="text-zinc-500 dark:text-zinc-400 text-sm">
+              Please sign in to your account to continue.
+            </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-1.5">
-              <Label htmlFor="email" className="text-zinc-700 dark:text-zinc-300">Email Address</Label>
+              <Label
+                htmlFor="email"
+                className="text-zinc-700 dark:text-zinc-300"
+              >
+                Email Address
+              </Label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 z-10" />
                 <Input
@@ -85,8 +95,16 @@ const LoginPage = () => {
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-zinc-700 dark:text-zinc-300">Password</Label>
-                <Link href="/forgot-password" className="text-sm font-medium text-cyan-600 hover:text-cyan-700 dark:text-cyan-400">
+                <Label
+                  htmlFor="password"
+                  className="text-zinc-700 dark:text-zinc-300"
+                >
+                  Password
+                </Label>
+                <Link
+                  href="/forgot-password"
+                  className="text-sm font-medium text-cyan-600 hover:text-cyan-700 dark:text-cyan-400"
+                >
                   Forgot password?
                 </Link>
               </div>
@@ -128,13 +146,15 @@ const LoginPage = () => {
           </Button>
 
           <p className="mt-8 text-center text-sm text-zinc-600 dark:text-zinc-400">
-            Do not have an account?{' '}
-            <Link href="/register" className="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 transition-colors">
+            Do not have an account?{" "}
+            <Link
+              href="/register"
+              className="font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 transition-colors"
+            >
               Register Now
             </Link>
           </p>
         </div>
-
       </div>
     </div>
   );
