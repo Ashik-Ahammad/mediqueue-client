@@ -7,18 +7,46 @@ import Lottie from "lottie-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import loginAnimation from "../../../../public/assets/login.json";
+import { authClient } from '@/lib/auth-client';
+import { toast } from 'sonner';
+import { redirect } from 'next/navigation';
 
 const LoginPage = () => {
 
   const handleLogin = async (e) => {
+
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const userData = Object.fromEntries(formData.entries());
 
-    console.log(userData);
+    const { data, error } = await authClient.signIn.email({
+          email: userData.email,
+          password: userData.password,
+        });
+
+        if (data) {
+          toast.success("Logged in successfully!");
+          redirect("/");
+        }
+        if (error) {
+          toast.error(error.message);
+        }
+  };
+
+  const handleGoogleLogin = async () => {
+
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+
+    } catch (error) {
+      console.error("Google Login Error:", error);
+      toast.error("Failed to connect with Google.");
+    }
   };
 
   return (
@@ -90,6 +118,7 @@ const LoginPage = () => {
           </div>
 
           <Button
+            onClick={handleGoogleLogin}
             type="button"
             variant="outline"
             className="mt-6 w-full h-12 flex items-center justify-center gap-3 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 font-semibold text-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
