@@ -15,7 +15,7 @@ const TutorCard = ({ tutor }) => {
     <Card className="group relative overflow-hidden rounded-3xl bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-500">
 
       <div className="p-3 pb-0">
-        <div className="relative h-56 w-full overflow-hidden rounded-sm bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/50 transform-[translateZ(0)]">
+        <div className="relative h-56 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/50 transform-[translateZ(0)]">
           <Image
             src={imageUrl || 'https://i.postimg.cc/8PxjBsmJ/aitutor.jpg'}
             alt={tutorName}

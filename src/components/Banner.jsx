@@ -52,7 +52,7 @@ const Banner = () => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={slide.id}>
-            <div className="relative h-125 md:h-150 w-full overflow-hidden">
+            <div className="relative h-[70vh] md:h-[calc(100vh-64px)] w-full overflow-hidden">
               <Image
                 src={slide.image}
                 alt={slide.title}

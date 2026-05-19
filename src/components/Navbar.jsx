@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Home, Users, PlusCircle, BookOpen, Calendar, LogIn, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+import { ModeToggle } from '@/components/ModeToggle';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -32,7 +33,6 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Desktop Links */}
         <div className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => {
             const Icon = link.icon;
@@ -56,24 +56,30 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <Link href="/login" className="hidden md:block">
-            <Button size="sm" className="bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium shadow-sm transition-all hover:cursor-pointer">
-              <LogIn className="mr-2 h-4 w-4" />
-              Login / Register
-            </Button>
-          </Link>
+          <div className="hidden md:flex items-center space-x-3">
+            <Link href="/login">
+              <Button size="sm" className="bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium shadow-sm transition-all hover:cursor-pointer">
+                <LogIn className="mr-2 h-4 w-4" />
+                Login / Register
+              </Button>
+            </Link>
 
-          <div className="md:hidden">
+            <ModeToggle />
+          </div>
+
+          <div className="md:hidden flex items-center gap-2">
+
+            <ModeToggle />
+
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-9 w-9 text-zinc-700 dark:text-zinc-300">
+                <Button variant="ghost" size="icon" className="h-9 w-9 text-zinc-700 dark:text-zinc-300 cursor-pointer">
                   <Menu className="h-5 w-5" />
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
               </SheetTrigger>
 
               <SheetContent side="right" className="w-75 border-l border-white/20 bg-white/40 backdrop-blur-2xl shadow-2xl dark:bg-black/50 dark:border-white/10 saturate-150">
-
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
 
                 <div className="flex flex-col space-y-4 mt-6">

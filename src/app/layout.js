@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,19 +12,27 @@ const inter = Inter({
 
 export const metadata = {
   title: "MediQueue",
-  description: "Best Tutor Finding App in Bangladesh",
+  description: "Best Tutor Finding App in Bangladesh | Tutor Finder",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+
+    <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
       <body
         className={`${inter.className} min-h-full flex flex-col bg-zinc-50 dark:bg-zinc-950`}
       >
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer></Footer>
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          {children}
+          <Footer />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import { Sparkles, ArrowRight, User, Mail, BookOpen } from 'lucide-react';
 import emailjs from '@emailjs/browser';
@@ -8,6 +7,7 @@ import { toast } from 'sonner';
 import teacherAnimation from "../../public/assets/Teacher.json";
 
 const BecomeMentor = () => {
+
   const handleApply = async (e) => {
     e.preventDefault();
 
@@ -24,7 +24,6 @@ const BecomeMentor = () => {
       toast.success('Application received! We will reach out within 24 hours.');
       e.target.reset();
     } catch (error) {
-      console.error(error);
       toast.error('Something went wrong. Please try again.');
     }
   };
