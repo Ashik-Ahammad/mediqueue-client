@@ -33,7 +33,7 @@ const LoginPage = () => {
       }
     }
     if (error) {
-      toast.error(error.message);
+      toast.error(error.message || "Something went wrong!");
     }
   };
 
@@ -47,7 +47,7 @@ const LoginPage = () => {
       });
     } catch (error) {
       console.error("Google Login Error:", error);
-      toast.error("Failed to connect with Google.");
+      toast.error(error.message || "Failed to connect with Google.");
     }
   };
 

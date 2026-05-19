@@ -77,10 +77,10 @@ const Navbar = () => {
             {user ? (
               <NavbarProfile user={user} />
             ) : (
-              <Link href="/login">
+              <Link href="/login" >
                 <Button
                   size="sm"
-                  className="bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium shadow-sm transition-all"
+                  className="bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium shadow-sm transition-all hover:cursor-pointer"
                 >
                   <LogIn className="mr-2 h-4 w-4" />
                   Login / Register
@@ -140,8 +140,8 @@ const Navbar = () => {
                 {!user && (
                   <div className="mt-auto pb-4">
                     <hr className="border-zinc-200 dark:border-zinc-800 mb-6" />
-                    <Link href="/login" className="w-full">
-                      <Button className="w-full justify-center bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+                    <Link href="/login" className="w-full hover:cursor-pointer">
+                      <Button className="w-full justify-center bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 hover:scale-[1.02] active:scale-95 transition-all shadow-md hover:cursor-pointer">
                         <LogIn className="mr-2 h-4 w-4" />
                         Login / Register
                       </Button>

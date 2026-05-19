@@ -69,7 +69,7 @@ const TutorCard = ({ tutor }) => {
 
         <div className="flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-4 mt-auto">
           <div className="flex items-baseline gap-1">
-            <span className="text-xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">৳{hourlyFee}</span>
+            <span className="text-xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">৳ {hourlyFee}</span>
             <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">/hr</span>
           </div>
 

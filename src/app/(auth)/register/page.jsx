@@ -25,7 +25,7 @@ const RegisterPage = () => {
     const userData = Object.fromEntries(formData.entries());
     const { password } = userData;
 
-    // Password Validation
+    // password validation
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters long.");
       toast.error("Registration failed! Check your password.");
@@ -53,7 +53,7 @@ const RegisterPage = () => {
       redirect("/");
     }
     if (error) {
-      toast.error(error.message);
+      toast.error(error.message || "Something went wrong!");
     }
   };
 
@@ -67,7 +67,7 @@ const RegisterPage = () => {
 
       } catch (error) {
         console.error("Google Login Error:", error);
-        toast.error("Failed to connect with Google.");
+        toast.error(error.message || "Failed to connect with Google.");
       }
     };
 

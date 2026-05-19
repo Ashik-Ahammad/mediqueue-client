@@ -37,15 +37,14 @@ const AddTutorPage = () => {
       });
 
       if (res.ok) {
-        toast.success("Tutor Successfully Added! 🎉");
+        toast.success("Tutor Successfully Added!");
         e.target.reset();
       } else {
         throw new Error("Failed to add data");
       }
 
     } catch (error) {
-      toast.error("Something went wrong! ❌", { id: toastId });
-      console.error("Error:", error);
+      toast.error(error.message || "Something went wrong!");
     }
 
   }

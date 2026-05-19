@@ -21,9 +21,6 @@ const LoadingPage = () => {
         </div>
 
         <div className="flex flex-col items-center gap-1.5 mt-2">
-          <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-            Gathering Tutors
-          </h2>
           <div className="flex items-center gap-1">
             <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 tracking-widest uppercase">
               Please Wait
