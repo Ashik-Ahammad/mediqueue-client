@@ -17,23 +17,31 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
 
 const AddTutorPage = () => {
 
-  const onSubmit = async (e) => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user || null;
 
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const formData = new FormData(e.currentTarget);
       const tutorData = Object.fromEntries(formData.entries());
 
+      const finalData = {
+        ...tutorData,
+        userId: user?.id || "",
+      };
+
       const res = await fetch("http://localhost:8000/tutors", {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(tutorData)
+        body: JSON.stringify(finalData)
       });
 
       if (res.ok) {
@@ -46,13 +54,11 @@ const AddTutorPage = () => {
     } catch (error) {
       toast.error(error.message || "Something went wrong!");
     }
-
   }
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center py-12 md:py-20 px-4 sm:px-6">
       <div className="w-full max-w-4xl bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden transition-all">
-
-        {/* Header*/}
         <div className="px-6 sm:px-12 pt-10 sm:pt-14 pb-8 border-b border-zinc-200/50 bg-white/70 dark:border-zinc-800/50 dark:bg-zinc-950/70 backdrop-blur-sm shadow-[0_4px_30px_rgba(0,0,0,0.03)] transition-all duration-500 hover:shadow-xl hover:bg-white/90 dark:hover:bg-zinc-950/90 group rounded-xl">
           <h1 className="flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-light sm:font-normal tracking-tight text-zinc-900 transition-all duration-300 group-hover:font-semibold group-hover:text-cyan-600 dark:text-zinc-50 dark:group-hover:text-cyan-400 animate-in fade-in slide-in-from-bottom-3 duration-300">
             <FaChalkboardTeacher className="h-6 w-6 sm:h-8 sm:w-8 text-zinc-400 transition-all duration-300 group-hover:scale-110 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 shrink-0" />
@@ -64,13 +70,11 @@ const AddTutorPage = () => {
           </p>
         </div>
 
-        {/* Form Section */}
         <form
           onSubmit={onSubmit}
           className="px-6 sm:px-12 py-8 sm:py-10 space-y-8"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
-            {/* Tutor Name */}
             <div className="group md:col-span-2">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <User className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -78,13 +82,12 @@ const AddTutorPage = () => {
               </label>
               <Input
                 name="tutorName"
-                placeholder="e.g. Ashik Ahammad"
+                placeholder="e.g. Mr Teacher"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
             </div>
 
-            {/* Photo URL */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <ImageIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -93,13 +96,12 @@ const AddTutorPage = () => {
               <Input
                 name="imageUrl"
                 type="url"
-                placeholder="https://i.ibb.co/..."
+                placeholder="https://i.ibb.co.png/..."
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
             </div>
 
-            {/* Subject Dropdown */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <BookOpen className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -118,10 +120,11 @@ const AddTutorPage = () => {
                 <option value="Biology">Biology</option>
                 <option value="English">English</option>
                 <option value="ICT">ICT</option>
+                <option value="ARABIC">ARABIC</option>
+                <option value="AGRICULTURE">AGRICULTURE</option>
               </select>
             </div>
 
-            {/* Available Days */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -135,7 +138,6 @@ const AddTutorPage = () => {
               />
             </div>
 
-            {/* Time Slot */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Clock className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -149,7 +151,6 @@ const AddTutorPage = () => {
               />
             </div>
 
-            {/* Hourly Fee */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <DollarSign className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -164,7 +165,6 @@ const AddTutorPage = () => {
               />
             </div>
 
-            {/* Total Slots */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Users className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -179,7 +179,6 @@ const AddTutorPage = () => {
               />
             </div>
 
-            {/* Start Date */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -193,7 +192,6 @@ const AddTutorPage = () => {
               />
             </div>
 
-            {/* Institution */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <GraduationCap className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -207,7 +205,6 @@ const AddTutorPage = () => {
               />
             </div>
 
-            {/* Experience */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Briefcase className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -221,7 +218,6 @@ const AddTutorPage = () => {
               />
             </div>
 
-            {/* Location */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <MapPin className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -235,7 +231,6 @@ const AddTutorPage = () => {
               />
             </div>
 
-            {/* Teaching Mode Dropdown */}
             <div className="group">
               <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Monitor className="h-4 w-4 transition-transform group-hover:scale-110" />
@@ -255,7 +250,6 @@ const AddTutorPage = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="pt-6 border-t border-zinc-200/50 dark:border-zinc-800/50 flex justify-end">
             <Button
               type="submit"

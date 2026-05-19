@@ -14,17 +14,18 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
 const MyTutorsPage = async () => {
+  
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
   const user = session?.user;
 
-  const res = await fetch(`http://localhost:8000/bookings/${user?.id}`, {
+  const res = await fetch(`http://localhost:8000/my-tutors/${user?.id}`, {
     cache: "no-store",
   });
 
-  const bookings = await res.json();
+  const tutors = await res.json();
 
   return (
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6">
@@ -34,11 +35,11 @@ const MyTutorsPage = async () => {
             My Tutors
           </h1>
           <p className="text-muted-foreground mt-1 text-sm">
-            Manage and update the tutors you have created or booked.
+            Manage and update the tutors you have created.
           </p>
         </div>
 
-        {!bookings || bookings.length === 0 ? (
+        {!tutors || tutors.length === 0 ? (
           <Card className="flex flex-col items-center justify-center py-24 text-center border-dashed border-2 border-border/60 bg-zinc-50/50 dark:bg-zinc-900/20 rounded-2xl shadow-sm">
             <div className="h-16 w-16 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mb-4">
               <Inbox className="h-8 w-8 text-zinc-400" />
@@ -47,8 +48,7 @@ const MyTutorsPage = async () => {
               No tutors found
             </h3>
             <p className="text-muted-foreground text-sm max-w-sm mb-6">
-              You have not created or booked any tutors yet. Add your first
-              tutor to see them listed here.
+              You have not created any tutors yet. Add your first tutor to see them listed here.
             </p>
             <Button className="bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:opacity-90">
               Add New Tutor
@@ -84,7 +84,7 @@ const MyTutorsPage = async () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {bookings.map((item) => (
+                  {tutors.map((item) => (
                     <TableRow
                       key={item._id}
                       className="border-border/50 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30 transition-colors"
