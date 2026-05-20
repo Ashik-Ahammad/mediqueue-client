@@ -9,6 +9,7 @@ import {
 import { MessageCircleQuestion, PhoneCall } from 'lucide-react';
 import Lottie from "lottie-react";
 import faqAnimation from "../../public/assets/Frequently Asked Question (FAQ).json";
+import { motion } from "framer-motion";
 
 const faqData = [
   {
@@ -43,22 +44,59 @@ const faqData = [
   }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const leftSideVariants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
+};
+
+const accordionItemVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 100, damping: 12 },
+  },
+};
+
 const FAQSection = () => {
   return (
     <section className="relative py-16 lg:py-24 overflow-hidden select-none">
-
       <div className="absolute top-0 right-0 -translate-y-12 translate-x-1/3 w-72 h-72 lg:w-150 lg:h-150 bg-cyan-50/50 rounded-full blur-[70px] lg:blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
 
-          <div className="lg:col-span-5 space-y-6 lg:space-y-8 lg:sticky lg:top-24">
-
+          <motion.div
+            className="lg:col-span-5 space-y-6 lg:space-y-8 lg:sticky lg:top-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={leftSideVariants}
+          >
             <div className="space-y-4 text-center lg:text-left flex flex-col items-center lg:items-start">
-              <div className="w-32 h-32 md:w-40 md:h-40 lg:w-50 lg:h-50 lg:-ml-2 mb-2">
+              <motion.div
+                className="w-32 h-32 md:w-40 md:h-40 lg:w-50 lg:h-50 lg:-ml-2 mb-2"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <Lottie animationData={faqAnimation} loop={true} />
-              </div>
+              </motion.div>
 
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 leading-[1.15]">
                 Frequently Asked <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-600 to-blue-600">Questions</span>
@@ -68,7 +106,11 @@ const FAQSection = () => {
               </p>
             </div>
 
-            <div className="p-5 lg:p-6 rounded-3xl bg-zinc-50 border border-zinc-100 flex flex-col sm:flex-row items-center sm:items-start gap-3 lg:gap-4 shadow-sm w-full max-w-md mx-auto lg:mx-0 text-center sm:text-left">
+            <motion.div
+              whileHover={{ y: -5, boxShadow: "0px 10px 30px rgba(6,182,212,0.1)" }}
+              transition={{ duration: 0.3 }}
+              className="p-5 lg:p-6 rounded-3xl bg-zinc-50 border border-zinc-100 flex flex-col sm:flex-row items-center sm:items-start gap-3 lg:gap-4 shadow-sm w-full max-w-md mx-auto lg:mx-0 text-center sm:text-left"
+            >
               <div className="p-3 rounded-2xl bg-white text-cyan-600 shadow-sm border border-zinc-100 shrink-0">
                 <MessageCircleQuestion className="h-6 w-6" />
               </div>
@@ -80,29 +122,35 @@ const FAQSection = () => {
                   Contact Support
                 </a>
               </div>
-            </div>
+            </motion.div>
+          </motion.div>
 
-          </div>
-
-          <div className="lg:col-span-7 mt-8 lg:mt-0">
+          <motion.div
+            className="lg:col-span-7 mt-8 lg:mt-0"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
             <Accordion type="single" collapsible className="w-full space-y-3 sm:space-y-4" defaultValue="item-1">
               {faqData.map((faq) => (
-                <AccordionItem
-                  key={faq.id}
-                  value={faq.id}
-                  className="bg-white border border-zinc-200 rounded-xl lg:rounded-2xl px-4 sm:px-6 shadow-sm data-[state=open]:border-cyan-500/30 data-[state=open]:shadow-md transition-all duration-300"
-                >
-                  <AccordionTrigger className="text-sm sm:text-base lg:text-lg font-bold text-zinc-800 hover:text-cyan-600 hover:no-underline py-4 lg:py-5 text-left leading-snug">
-                    {faq.question}
-                  </AccordionTrigger>
+                <motion.div key={faq.id} variants={accordionItemVariants}>
+                  <AccordionItem
+                    value={faq.id}
+                    className="bg-white border border-zinc-200 rounded-xl lg:rounded-2xl px-4 sm:px-6 shadow-sm data-[state=open]:border-cyan-500/30 data-[state=open]:shadow-md transition-all duration-300"
+                  >
+                    <AccordionTrigger className="text-sm sm:text-base lg:text-lg font-bold text-zinc-800 hover:text-cyan-600 hover:no-underline py-4 lg:py-5 text-left leading-snug">
+                      {faq.question}
+                    </AccordionTrigger>
 
-                  <AccordionContent className="text-sm sm:text-base text-zinc-500 leading-relaxed pb-5 lg:pb-6 pr-2 lg:pr-6">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
+                    <AccordionContent className="text-sm sm:text-base text-zinc-500 leading-relaxed pb-5 lg:pb-6 pr-2 lg:pr-6">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                </motion.div>
               ))}
             </Accordion>
-          </div>
+          </motion.div>
 
         </div>
       </div>

@@ -14,19 +14,33 @@ import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export function MyTutorDeleteAlert({ tutor }) {
-
   const router = useRouter();
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/tutors/${tutor._id}`, {
+      const { data: tokenData } = await authClient.token();
+
+      const jwtToken = tokenData?.token;
+
+      if (!jwtToken) {
+        toast.error("Authentication failed. Please login again.");
+        return;
+      }
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${tutor._id}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${jwtToken}`,
+        },
       });
 
       if (res.ok) {
-        toast.success("Tutor deleted successfully & all booked slots cancelled!");
+        toast.success(
+          "Tutor deleted successfully & all booked slots cancelled!",
+        );
         router.refresh();
       } else {
         throw new Error("Failed to delete tutor");

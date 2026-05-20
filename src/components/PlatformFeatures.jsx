@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Marquee from "react-fast-marquee";
+import { motion } from "framer-motion";
 import {
   ShieldCheck, GraduationCap, Video, CreditCard, Users,
   Clock, MapPin, TrendingUp, Lock, Headphones, Sparkles
@@ -70,26 +71,68 @@ const platformFeatures = [
   }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  },
+};
+
 const PlatformFeatures = () => {
   return (
     <section className="relative py-24 overflow-hidden bg-transparent">
 
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-cyan-400/10 dark:bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 px-3.5 py-1.5 text-xs font-bold tracking-wider text-cyan-700 dark:text-cyan-400 uppercase border border-cyan-200/60 dark:border-cyan-500/20 shadow-sm mb-4">
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.span
+          variants={itemVariants}
+          className="inline-flex items-center gap-1.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 px-3.5 py-1.5 text-xs font-bold tracking-wider text-cyan-700 dark:text-cyan-400 uppercase border border-cyan-200/60 dark:border-cyan-500/20 shadow-sm mb-4"
+        >
           <Sparkles className="h-3.5 w-3.5" />
           Why Choose Us
-        </span>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Everything You Need to <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500">Succeed</span>
-        </h2>
-        <p className="mt-4 text-base sm:text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-          We provide the most reliable, secure, and flexible ecosystem for students to find their perfect mentors.
-        </p>
-      </div>
+        </motion.span>
 
-      <div className="relative w-full">
+        <motion.h2
+          variants={itemVariants}
+          className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50"
+        >
+          Everything You Need to <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500">Succeed</span>
+        </motion.h2>
+
+        <motion.p
+          variants={itemVariants}
+          className="mt-4 text-base sm:text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed"
+        >
+          We provide the most reliable, secure, and flexible ecosystem for students to find their perfect mentors.
+        </motion.p>
+      </motion.div>
+
+      <motion.div
+        className="relative w-full"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
 
         <div className="absolute left-0 top-0 z-20 h-full w-24 sm:w-40 bg-linear-to-r from-[#fafafa] dark:from-zinc-950 to-transparent pointer-events-none" />
         <div className="absolute right-0 top-0 z-20 h-full w-24 sm:w-40 bg-linear-to-l from-[#fafafa] dark:from-zinc-950 to-transparent pointer-events-none" />
@@ -123,7 +166,7 @@ const PlatformFeatures = () => {
             );
           })}
         </Marquee>
-      </div>
+      </motion.div>
 
     </section>
   );

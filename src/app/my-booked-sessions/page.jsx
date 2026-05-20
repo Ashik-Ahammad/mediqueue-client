@@ -22,8 +22,15 @@ const MyBookedSessionsPage = async () => {
 
   const user = session?.user;
 
-  const res = await fetch(`http://localhost:8000/bookings/${user?.id}`, {
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${user?.id}`, {
     cache: "no-store",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
   });
 
   const myBookings = await res.json();
@@ -53,9 +60,10 @@ const MyBookedSessionsPage = async () => {
               book your first session.
             </p>
             <Link href="tutors">
-            <Button className="bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:opacity-90">
-              Book a Session
-            </Button></Link>
+              <Button className="bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:opacity-90">
+                Book a Session
+              </Button>
+            </Link>
           </Card>
         ) : (
           <Card className="border border-border/60 shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-zinc-950">
@@ -92,7 +100,7 @@ const MyBookedSessionsPage = async () => {
                         className="border-border/50 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30 transition-colors"
                       >
                         <TableCell className="font-medium text-foreground py-4 pl-6">
-                          {booking.name || "N/A"}
+                          {booking.userName || "N/A"}
                         </TableCell>
                         <TableCell className="text-muted-foreground text-sm">
                           {booking.phone || "N/A"}
@@ -101,14 +109,14 @@ const MyBookedSessionsPage = async () => {
                           {booking.tutorName}
                         </TableCell>
                         <TableCell className="text-muted-foreground text-sm">
-                          {booking.email}
+                          {booking.userEmail}
                         </TableCell>
                         <TableCell>
                           <span
                             className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold ${
                               isCancelled
                                 ? "bg-red-100 text-red-500 dark:bg-red-900/30 dark:text-red-400"
-                                : "bg-green-100 text-green-500 dark:bg-green-900/30 dark:text-green-400"
+                                : "bg-green-400 text-white dark:bg-green-900/30 dark:text-green-400"
                             }`}
                           >
                             {booking.status || "Confirmed"}

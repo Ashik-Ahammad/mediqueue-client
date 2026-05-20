@@ -14,14 +14,27 @@ import { Button } from "@/components/ui/button";
 import { XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export function CancelBookingButton({ bookingId, isCancelled }) {
   const router = useRouter();
 
   const handleCancel = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/bookings/${bookingId}`, {
+      const { data: tokenData } = await authClient.token();
+
+  const jwtToken = tokenData?.token;
+
+  if (!jwtToken) {
+    toast.error('Authentication failed. Please login again.');
+    return;
+  }
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${bookingId}`, {
         method: "PATCH",
+        headers: {
+          "Authorization": `Bearer ${jwtToken}`,
+        },
       });
 
       if (res.ok) {

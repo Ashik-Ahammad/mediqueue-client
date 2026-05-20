@@ -80,9 +80,20 @@ export function BookSessionModal({ tutor }) {
         phone: phoneValue,
       };
 
-      const res = await fetch("http://localhost:8000/bookings", {
+      const { data: tokenData } = await authClient.token();
+      const jwtToken = tokenData?.token;
+
+      if (!jwtToken) {
+        toast.error("Authentication failed. Please login again.");
+        return;
+      }
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwtToken}`,
+        },
         body: JSON.stringify(bookingData),
       });
 

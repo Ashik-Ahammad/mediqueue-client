@@ -5,12 +5,11 @@ import emailjs from '@emailjs/browser';
 import Lottie from "lottie-react";
 import { toast } from 'sonner';
 import teacherAnimation from "../../public/assets/Teacher.json";
+import { motion } from "framer-motion";
 
 const BecomeMentor = () => {
-
   const handleApply = async (e) => {
     e.preventDefault();
-
     const formData = Object.fromEntries(new FormData(e.currentTarget));
 
     try {
@@ -28,12 +27,55 @@ const BecomeMentor = () => {
     }
   };
 
+  const lottieVariants = {
+    hidden: { scale: 0.5, opacity: 0, rotate: -10 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      rotate: 0,
+      transition: { type: "spring", stiffness: 120, damping: 14 }
+    }
+  };
+
+  const textContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15 }
+    }
+  };
+
+  const textChildVariants = {
+    hidden: { opacity: 0, x: -40 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { type: "spring", stiffness: 100 }
+    }
+  };
+
+  const formVariants = {
+    hidden: { opacity: 0, y: 50, rotateX: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
   return (
     <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden bg-transparent">
       <div className="relative rounded-[2.5rem] dark:bg-zinc-900 p-8 md:p-12 lg:p-16 overflow-hidden">
         <div className="flex flex-col gap-12 lg:gap-16 relative z-10">
 
-          <div className="w-full flex justify-center relative">
+          <motion.div
+            className="w-full flex justify-center relative"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={lottieVariants}
+          >
             <div className="relative w-full max-w-100 z-10 flex items-center justify-center">
               <Lottie
                 animationData={teacherAnimation}
@@ -41,32 +83,56 @@ const BecomeMentor = () => {
                 className="w-full h-auto"
               />
             </div>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-            <div className="space-y-6 text-center lg:text-left">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 px-4 py-1.5 text-xs font-bold tracking-wider text-zinc-800 dark:text-zinc-300 uppercase border border-zinc-200 dark:border-zinc-700">
+            <motion.div
+              className="space-y-6 text-center lg:text-left"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={textContainerVariants}
+            >
+              <motion.span
+                variants={textChildVariants}
+                className="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 px-4 py-1.5 text-xs font-bold tracking-wider text-zinc-800 dark:text-zinc-300 uppercase border border-zinc-200 dark:border-zinc-700"
+              >
                 <Sparkles className="h-3.5 w-3.5 text-cyan-500 animate-pulse" />
                 Join the Service
-              </span>
+              </motion.span>
 
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.1]">
+              <motion.h2
+                variants={textChildVariants}
+                className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.1]"
+              >
                 Share your knowledge <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-600 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-blue-400 dark:to-indigo-400">and earn.</span>
-              </h2>
+              </motion.h2>
 
-              <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+              <motion.p
+                variants={textChildVariants}
+                className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium"
+              >
                 Join our elite community of professional mentors. Teach on your own schedule, reach thousands of students, and grow your teaching career.
-              </p>
+              </motion.p>
 
-              <div className="pt-4 flex flex-wrap gap-4 justify-center lg:justify-start text-xs font-bold text-zinc-500 dark:text-zinc-400">
+              <motion.div
+                variants={textChildVariants}
+                className="pt-4 flex flex-wrap gap-4 justify-center lg:justify-start text-xs font-bold text-zinc-500 dark:text-zinc-400"
+              >
                 <span className="flex items-center gap-1">✦ Weekly Payouts</span>
                 <span className="flex items-center gap-1">✦ Flexible Hours</span>
                 <span className="flex items-center gap-1">✦ 24/7 Support</span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            <div className="w-full">
+            <motion.div
+              className="w-full"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={formVariants}
+            >
               <form
                 onSubmit={handleApply}
                 className="p-6 sm:p-10 rounded-[2rem] bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 space-y-5"
@@ -109,19 +175,20 @@ const BecomeMentor = () => {
                   />
                 </div>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
-                  className="group relative w-full py-4 rounded-2xl bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 font-bold text-sm tracking-wide shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
+                  className="group relative w-full py-4 rounded-2xl bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 font-bold text-sm tracking-wide shadow-lg overflow-hidden transition-all duration-300 cursor-pointer"
                 >
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.2),transparent_60%)] pointer-events-none" />
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     Apply as Tutor
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </span>
-                </button>
+                </motion.button>
               </form>
-            </div>
-
+            </motion.div>
           </div>
         </div>
       </div>

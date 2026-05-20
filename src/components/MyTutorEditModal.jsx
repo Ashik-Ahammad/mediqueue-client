@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export function MyTutorEditModal({ tutor }) {
   const router = useRouter();
@@ -28,10 +29,20 @@ export function MyTutorEditModal({ tutor }) {
       const formData = new FormData(e.currentTarget);
       const updatedData = Object.fromEntries(formData.entries());
 
-      const res = await fetch(`http://localhost:8000/tutors/${tutor._id}`, {
+      const { data: tokenData } = await authClient.token();
+
+  const jwtToken = tokenData?.token;
+
+  if (!jwtToken) {
+    toast.error('Authentication failed. Please login again.');
+    return;
+  }
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${tutor._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwtToken}`,
         },
         body: JSON.stringify(updatedData),
       });

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, Pencil, Inbox } from "lucide-react";
+import { Inbox } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { MyTutorDeleteAlert } from "@/components/MyTutorDeleteAlert";
@@ -17,16 +17,26 @@ import { MyTutorEditModal } from "@/components/MyTutorEditModal";
 import Link from "next/link";
 
 const MyTutorsPage = async () => {
-
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
   const user = session?.user;
 
-  const res = await fetch(`http://localhost:8000/my-tutors/${user?.id}`, {
-    cache: "no-store",
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
   });
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/my-tutors/${user?.id}`,
+    {
+      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+    },
+
+    }
+  );
 
   const tutors = await res.json();
 
@@ -51,12 +61,14 @@ const MyTutorsPage = async () => {
               No tutors found
             </h3>
             <p className="text-muted-foreground text-sm max-w-sm mb-6">
-              You have not created any tutors yet. Add your first tutor to see them listed here.
+              You have not created any tutors yet. Add your first tutor to see
+              them listed here.
             </p>
             <Link href="add-tutor">
-            <Button className="bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:opacity-90">
-              Add New Tutor
-            </Button></Link>
+              <Button className="bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:opacity-90">
+                Add New Tutor
+              </Button>
+            </Link>
           </Card>
         ) : (
           <Card className="border border-border/60 shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-zinc-950">
@@ -115,7 +127,9 @@ const MyTutorsPage = async () => {
                       </TableCell>
                       <TableCell className="text-right pr-6">
                         <div className="flex items-center justify-end gap-2">
-                          <MyTutorDeleteAlert tutor={tutor}></MyTutorDeleteAlert>
+                          <MyTutorDeleteAlert
+                            tutor={tutor}
+                          ></MyTutorDeleteAlert>
 
                           <MyTutorEditModal tutor={tutor}></MyTutorEditModal>
                         </div>
