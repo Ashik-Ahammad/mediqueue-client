@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Inbox, X } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { CancelBookingButton } from "@/components/CancelBookingButton";
+import Link from "next/link";
 
 const MyBookedSessionsPage = async () => {
   const session = await auth.api.getSession({
@@ -47,8 +49,13 @@ const MyBookedSessionsPage = async () => {
               No bookings found
             </h3>
             <p className="text-muted-foreground text-sm max-w-sm mb-6">
-              You have not booked any sessions yet. Browse available tutors and book your first session.
+              You have not booked any sessions yet. Browse available tutors and
+              book your first session.
             </p>
+            <Link href="tutors">
+            <Button className="bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:opacity-90">
+              Book a Session
+            </Button></Link>
           </Card>
         ) : (
           <Card className="border border-border/60 shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-zinc-950">
@@ -78,7 +85,7 @@ const MyBookedSessionsPage = async () => {
                 </TableHeader>
                 <TableBody>
                   {myBookings.map((booking) => {
-                    const isCancelled = booking.status === "cancelled";
+                    const isCancelled = booking.status === "Cancelled";
                     return (
                       <TableRow
                         key={booking._id}
@@ -108,19 +115,11 @@ const MyBookedSessionsPage = async () => {
                           </span>
                         </TableCell>
                         <TableCell className="text-right pr-6">
-                          <div className="flex items-center justify-end">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              disabled={isCancelled}
-                              className={`h-8 w-8 hover:cursor-pointer transition-colors ${
-                                isCancelled
-                                  ? "opacity-50 cursor-not-allowed"
-                                  : "text-red-500 border-red-100 hover:bg-red-50 hover:text-red-600 hover:border-red-200 dark:border-red-900/30 dark:hover:bg-red-950/30"
-                              }`}
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
+                          <div className="flex items-center justify-end gap-2">
+                            <CancelBookingButton
+                              bookingId={booking._id}
+                              isCancelled={isCancelled}
+                            />
                           </div>
                         </TableCell>
                       </TableRow>

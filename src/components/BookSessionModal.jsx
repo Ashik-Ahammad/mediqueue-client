@@ -40,10 +40,12 @@ export function BookSessionModal({ tutor }) {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      toast.error("Please login to book a session!");
+      return;
+    }
     if (isFull) {
-      toast.error(
-        "This session is fully booked. You can’t join at the moment.",
-      );
+      toast.error("This session is fully booked. You can not join at the moment.");
       return;
     }
     if (isEarly) {
@@ -53,17 +55,29 @@ export function BookSessionModal({ tutor }) {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const bookingFields = Object.fromEntries(formData.entries());
+      const phoneValue = formData.get("phone");
+
+      if (!phoneValue || phoneValue.length !== 11) {
+        toast.error("Please enter a valid 11 digit phone number!");
+        return;
+      }
 
       const bookingData = {
-        ...bookingFields,
-        userId: user?.id || "",
-        subject: tutor?.subject || "",
-        hourlyFee: tutor?.hourlyFee || "",
-        availableDays: tutor?.availableDays || "",
-        timeSlot: tutor?.timeSlot || "",
-        startDate: tutor?.startDate || "",
-        totalSlot: tutor?.totalSlot || "",
+        userId: user?.id,
+        userEmail: user?.email,
+        userImage: user?.image,
+        userName: user?.name,
+
+        tutorId: tutor?._id,
+        tutorName: tutor?.tutorName,
+        subject: tutor?.subject,
+        hourlyFee: tutor?.hourlyFee,
+        availableDays: tutor?.availableDays,
+        timeSlot: tutor?.timeSlot,
+        startDate: tutor?.startDate,
+        totalSlot: tutor?.totalSlot,
+
+        phone: phoneValue,
       };
 
       const res = await fetch("http://localhost:8000/bookings", {
@@ -115,10 +129,7 @@ export function BookSessionModal({ tutor }) {
           </DialogDescription>
         </div>
 
-        <form
-          onSubmit={onSubmit}
-          className="space-y-6 px-8 py-8 bg-white dark:bg-zinc-950"
-        >
+        <form onSubmit={onSubmit} className="space-y-6 px-8 py-8 bg-white dark:bg-zinc-950">
           <FieldGroup className="space-y-5">
             <Field className="mb-2 w-full">
               <Label
@@ -202,7 +213,7 @@ export function BookSessionModal({ tutor }) {
               <Input
                 id="phone"
                 name="phone"
-                placeholder="017XX-XXXXXX"
+                placeholder="011XX-XXXXXX"
                 required
                 minLength={11}
                 maxLength={11}

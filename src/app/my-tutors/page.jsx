@@ -12,9 +12,12 @@ import { Button } from "@/components/ui/button";
 import { Trash2, Pencil, Inbox } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { MyTutorDeleteAlert } from "@/components/MyTutorDeleteAlert";
+import { MyTutorEditModal } from "@/components/MyTutorEditModal";
+import Link from "next/link";
 
 const MyTutorsPage = async () => {
-  
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -50,9 +53,10 @@ const MyTutorsPage = async () => {
             <p className="text-muted-foreground text-sm max-w-sm mb-6">
               You have not created any tutors yet. Add your first tutor to see them listed here.
             </p>
+            <Link href="add-tutor">
             <Button className="bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:opacity-90">
               Add New Tutor
-            </Button>
+            </Button></Link>
           </Card>
         ) : (
           <Card className="border border-border/60 shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-zinc-950">
@@ -84,48 +88,36 @@ const MyTutorsPage = async () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {tutors.map((item) => (
+                  {tutors.map((tutor) => (
                     <TableRow
-                      key={item._id}
+                      key={tutor._id}
                       className="border-border/50 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30 transition-colors"
                     >
                       <TableCell className="font-bold text-foreground py-4">
-                        {item.tutorName}
+                        {tutor.tutorName}
                       </TableCell>
                       <TableCell className="font-medium text-muted-foreground">
-                        {item.subject || "N/A"}
+                        {tutor.subject || "N/A"}
                       </TableCell>
                       <TableCell className="text-muted-foreground text-sm">
-                        {item.availableDays || ""} {item.timeSlot || ""}
+                        {tutor.availableDays || ""} {tutor.timeSlot || ""}
                       </TableCell>
                       <TableCell className="font-medium text-foreground text-sm">
-                        ৳{item.hourlyFee || "N/A"}
+                        ৳ {tutor.hourlyFee || "N/A"}
                       </TableCell>
                       <TableCell>
                         <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                          {item.totalSlot || "0"}
+                          {tutor.totalSlot || "0"}
                         </span>
                       </TableCell>
                       <TableCell className="text-muted-foreground text-sm">
-                        {item.startDate || "N/A"}
+                        {tutor.startDate || "N/A"}
                       </TableCell>
                       <TableCell className="text-right pr-6">
                         <div className="flex items-center justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                          <MyTutorDeleteAlert tutor={tutor}></MyTutorDeleteAlert>
 
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-colors"
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
+                          <MyTutorEditModal tutor={tutor}></MyTutorEditModal>
                         </div>
                       </TableCell>
                     </TableRow>

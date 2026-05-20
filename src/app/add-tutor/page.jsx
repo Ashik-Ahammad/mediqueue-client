@@ -1,4 +1,5 @@
 "use client"
+import { useState } from "react";
 import {
   User,
   Image as ImageIcon,
@@ -15,25 +16,55 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Field, FieldGroup } from "@/components/ui/field";
+import { Label } from "@/components/ui/label";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddTutorPage = () => {
-
   const { data: session } = authClient.useSession();
   const user = session?.user || null;
 
+  const [startDate, setStartDate] = useState(null);
+
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      toast.error("Please login to create a tutor profile!");
+      return;
+    }
+
+    if (!startDate) {
+      toast.error("Please select a Session Start Date!");
+      return;
+    }
 
     try {
       const formData = new FormData(e.currentTarget);
       const tutorData = Object.fromEntries(formData.entries());
 
       const finalData = {
-        ...tutorData,
-        userId: user?.id || "",
+        userId: user?.id,
+        userName: user?.name,
+        userEmail: user?.email,
+        userImage: user?.image,
+
+        tutorName: tutorData.tutorName,
+        imageUrl: tutorData.imageUrl,
+        subject: tutorData.subject,
+        availableDays: tutorData.availableDays,
+        timeSlot: tutorData.timeSlot,
+        hourlyFee: tutorData.hourlyFee,
+        totalSlot: tutorData.totalSlot,
+        startDate: startDate.toISOString().split("T")[0],
+        institution: tutorData.institution,
+        experience: tutorData.experience,
+        location: tutorData.location,
+        teachingMode: tutorData.teachingMode,
       };
 
       const res = await fetch("http://localhost:8000/tutors", {
@@ -47,6 +78,7 @@ const AddTutorPage = () => {
       if (res.ok) {
         toast.success("Tutor Successfully Added!");
         e.target.reset();
+        setStartDate(null);
       } else {
         throw new Error("Failed to add data");
       }
@@ -59,7 +91,7 @@ const AddTutorPage = () => {
   return (
     <div className="min-h-screen w-full flex items-center justify-center py-12 md:py-20 px-4 sm:px-6">
       <div className="w-full max-w-4xl bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden transition-all">
-        <div className="px-6 sm:px-12 pt-10 sm:pt-14 pb-8 border-b border-zinc-200/50 bg-white/70 dark:border-zinc-800/50 dark:bg-zinc-950/70 backdrop-blur-sm shadow-[0_4px_30px_rgba(0,0,0,0.03)] transition-all duration-500 hover:shadow-xl hover:bg-white/90 dark:hover:bg-zinc-950/90 group rounded-xl">
+        <div className="px-6 sm:px-12 pt-10 sm:pt-14 pb-8 border-b border-zinc-200/50 bg-white/70 dark:border-zinc-800/50 dark:bg-zinc-950/70 backdrop-blur-sm shadow-[0_4px_30px_rgba(0,0,0,0.03)] transition-all duration-500 hover:bg-white/90 dark:hover:bg-zinc-950/90 group rounded-xl">
           <h1 className="flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-light sm:font-normal tracking-tight text-zinc-900 transition-all duration-300 group-hover:font-semibold group-hover:text-cyan-600 dark:text-zinc-50 dark:group-hover:text-cyan-400 animate-in fade-in slide-in-from-bottom-3 duration-300">
             <FaChalkboardTeacher className="h-6 w-6 sm:h-8 sm:w-8 text-zinc-400 transition-all duration-300 group-hover:scale-110 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 shrink-0" />
             <span>New Tutor Profile</span>
@@ -70,44 +102,44 @@ const AddTutorPage = () => {
           </p>
         </div>
 
-        <form
-          onSubmit={onSubmit}
-          className="px-6 sm:px-12 py-8 sm:py-10 space-y-8"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
-            <div className="group md:col-span-2">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+        <form onSubmit={onSubmit} className="px-6 sm:px-12 py-8 sm:py-10 space-y-8">
+          <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
+            <Field className="group md:col-span-2">
+              <Label htmlFor="tutorName" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <User className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Tutor Name
-              </label>
+              </Label>
               <Input
+                id="tutorName"
                 name="tutorName"
                 placeholder="e.g. Mr Teacher"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="imageUrl" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <ImageIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Photo URL
-              </label>
+              </Label>
               <Input
+                id="imageUrl"
                 name="imageUrl"
                 type="url"
                 placeholder="https://i.ibb.co.png/..."
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="subject" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <BookOpen className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Subject
-              </label>
+              </Label>
               <select
+                id="subject"
                 name="subject"
                 required
                 defaultValue=""
@@ -123,120 +155,133 @@ const AddTutorPage = () => {
                 <option value="ARABIC">ARABIC</option>
                 <option value="AGRICULTURE">AGRICULTURE</option>
               </select>
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="availableDays" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Available Days
-              </label>
+              </Label>
               <Input
+                id="availableDays"
                 name="availableDays"
                 placeholder="e.g. Sun - Thu, Sat/Mon"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="timeSlot" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Clock className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Time Slot
-              </label>
+              </Label>
               <Input
+                id="timeSlot"
                 name="timeSlot"
                 placeholder="e.g. 5:00 PM - 8:00 PM"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="hourlyFee" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <DollarSign className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Hourly Fee (BDT)
-              </label>
+              </Label>
               <Input
+                id="hourlyFee"
                 name="hourlyFee"
                 type="number"
                 placeholder="e.g. 500"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="totalSlot" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Users className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Total Slots
-              </label>
+              </Label>
               <Input
+                id="totalSlot"
                 name="totalSlot"
                 type="number"
                 placeholder="e.g. 5"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="startDate" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Session Start Date
-              </label>
-              <Input
-                name="startDate"
-                type="date"
-                required
-                className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
-              />
-            </div>
+              </Label>
+              <div className="w-full">
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="Select date (YYYY-MM-DD)"
+                  wrapperClassName="w-full"
+                  className="w-full h-12 px-3 bg-zinc-50/50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all outline-none focus:ring-2 focus:ring-cyan-500 text-sm text-zinc-900 dark:text-zinc-100"
+                  required
+                />
+              </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="institution" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <GraduationCap className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Institution
-              </label>
+              </Label>
               <Input
+                id="institution"
                 name="institution"
                 placeholder="e.g. Dhaka University"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="experience" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Briefcase className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Teaching Experience
-              </label>
+              </Label>
               <Input
+                id="experience"
                 name="experience"
                 placeholder="e.g. 3 Years / Fresh Graduate"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="location" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <MapPin className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Location
-              </label>
+              </Label>
               <Input
+                id="location"
                 name="location"
                 placeholder="e.g. Savar, Dhaka"
                 required
                 className="bg-zinc-50/50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus:bg-white dark:focus:bg-zinc-950 rounded-xl shadow-sm transition-all h-12"
               />
-            </div>
+            </Field>
 
-            <div className="group">
-              <label className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
+            <Field className="group">
+              <Label htmlFor="teachingMode" className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-2 transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-400">
                 <Monitor className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Teaching Mode
-              </label>
+              </Label>
               <select
+                id="teachingMode"
                 name="teachingMode"
                 required
                 defaultValue=""
@@ -247,8 +292,8 @@ const AddTutorPage = () => {
                 <option value="Offline">Offline</option>
                 <option value="Both">Both</option>
               </select>
-            </div>
-          </div>
+            </Field>
+          </FieldGroup>
 
           <div className="pt-6 border-t border-zinc-200/50 dark:border-zinc-800/50 flex justify-end">
             <Button
