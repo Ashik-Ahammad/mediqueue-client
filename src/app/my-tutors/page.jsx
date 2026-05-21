@@ -16,6 +16,12 @@ import { MyTutorDeleteAlert } from "@/components/MyTutorDeleteAlert";
 import { MyTutorEditModal } from "@/components/MyTutorEditModal";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Manage My Tutors | MediQueue",
+  description: "Manage your tutor profiles, update availability, and track your teaching slots easily on MediQueue.",
+};
+
+
 const MyTutorsPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),

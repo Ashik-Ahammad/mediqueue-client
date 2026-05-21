@@ -1,12 +1,12 @@
-# 🌟 Mediqueue - Professional Booking & Scheduling Platform
+# 🌟 Mediqueue - Professional Tutor Booking & Scheduling Platform
 
 # 🌐 Live Website
 
-[![Client Side Live Preview](https://img.shields.io/badge/Live_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](http://localhost:3000/)
+[![Client Side Live Preview](https://img.shields.io/badge/Live_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](https://mediqueue-client-tutor.vercel.app/)
 
 [![Server Side Live Preview](https://img.shields.io/badge/Live_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](https://mediqueue-server-livid.vercel.app/)
 
-![Mediqueue Banner](https://via.placeholder.com/1200x400/09090b/06b6d4?text=Mediqueue+-+Seamless+Booking+Experience)
+[![image.png](https://i.postimg.cc/cC8YmG8M/image.png)](https://postimg.cc/dZwLsX6L)
 
 MediQueue is a modern full-stack tutor booking platform where users can explore tutors, book sessions, manage bookings, and handle tutor schedules efficiently. The project is built with **Next.js 16**, **MongoDB**, **Express.js**, and secure **JWT Authentication** using Better Auth.
 

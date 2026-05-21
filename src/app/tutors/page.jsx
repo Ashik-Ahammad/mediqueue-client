@@ -1,5 +1,10 @@
-import TutorCard from "@/components/TutorCard";
 import TutorSearchFilter from "@/components/TutorSearchFilter";
+import TutorListClient from "./TutorListClient";
+
+export const metadata = {
+  title: "Find Top Tutors in Bangladesh | MediQueue",
+  description: "Browse and book the best expert tutors in Bangladesh for online and offline classes. Find your perfect teacher for Physics, Math, English, and more on MediQueue.",
+};
 
 const AllTutorsPage = async ({ searchParams }) => {
 
@@ -36,19 +41,7 @@ const AllTutorsPage = async ({ searchParams }) => {
 
         <TutorSearchFilter />
 
-        {/* -----Tutors----- */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {tutors?.map((tutor) => (
-            <TutorCard key={tutor._id} tutor={tutor} />
-          ))}
-        </div>
-
-        {tutors.length === 0 && (
-          <div className="text-center mt-20 p-8 border border-dashed border-zinc-300 dark:border-zinc-800 rounded-2xl">
-            <h3 className="text-xl font-semibold text-zinc-700 dark:text-zinc-300">No tutors found</h3>
-            <p className="text-zinc-500 mt-2">Try adjusting your search or date filter.</p>
-          </div>
-        )}
+        <TutorListClient tutors={tutors} />
       </div>
     </div>
   );

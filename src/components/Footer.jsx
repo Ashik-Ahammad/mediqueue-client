@@ -52,7 +52,7 @@ const Footer = () => {
               />
             </Link>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-xs">
-              The premier tutor booking platform. Simplifying learning by connecting students with expert educators effortlessly.
+              The premium tutor booking platform. Simplifying learning by connecting students with expert educators effortlessly.
             </p>
             <div className="flex items-center justify-center lg:justify-start space-x-3 pt-3">
               {[
@@ -68,7 +68,7 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-white hover:bg-cyan-600 hover:border-cyan-600 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-cyan-600 transition-all duration-300 shadow-sm"
+                    className="group p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-white hover:bg-cyan-600 hover:border-cyan-600 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-linear-to-r dark:hover:from-cyan-700 dark:hover:to-blue-700 transition-all duration-300 shadow-sm"
                   >
                     <Icon className="h-4 w-4 transform group-hover:scale-110 transition-transform" />
                   </a>

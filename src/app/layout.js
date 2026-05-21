@@ -11,8 +11,12 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "MediQueue",
-  description: "Best Tutor Finding App in Bangladesh | Tutor Finder",
+  title: {
+    default: "MediQueue | Best Tutor Finding Platform in Bangladesh",
+    template: "%s | MediQueue",
+  },
+  description: "MediQueue seamlessly connects students with expert tutors across Bangladesh. Find, book, and manage both online and offline tuition sessions easily.",
+  keywords: ["Tutor in Bangladesh", "Online Tuition", "Home Tutor", "MediQueue", "Find Tutor BD", "Best Tutors", "Online Teacher", "Online Class", "Teaching Online"],
 };
 
 export default function RootLayout({ children }) {

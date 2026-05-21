@@ -1,4 +1,5 @@
 import React from "react";
+import { redirect } from "next/navigation";
 import {
   Table,
   TableBody,
@@ -15,25 +16,37 @@ import { headers } from "next/headers";
 import { CancelBookingButton } from "@/components/CancelBookingButton";
 import Link from "next/link";
 
+export const metadata = {
+  title: "My Booked Sessions | MediQueue",
+  description: "View and manage your upcoming tutor sessions and learning schedule seamlessly on MediQueue.",
+};
+
 const MyBookedSessionsPage = async () => {
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  const user = session?.user;
+  if (!session || !session.user) {
+    redirect("/login");
+  }
+
+  const user = session.user;
 
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${user?.id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${user.id}`, {
     cache: "no-store",
     headers: {
       authorization: `Bearer ${token}`,
     },
   });
 
-  const myBookings = await res.json();
+  const fetchedData = await res.json();
+
+  const myBookings = Array.isArray(fetchedData) ? fetchedData : [];
 
   return (
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6">

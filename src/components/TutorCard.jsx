@@ -35,10 +35,16 @@ const TutorCard = ({ tutor }) => {
       />
       <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/60 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-95"></div>
 
-      {/* Fee Badge - Always Glassmorphic Gradient */}
-      <span className="absolute right-0 top-0 z-20 rounded-bl-2xl bg-linear-to-br from-cyan-500/60 to-white/20 backdrop-blur-md border-b border-l border-white/40 px-4 py-2.5 text-sm font-bold tracking-wider text-white shadow-[0_8px_30px_rgba(6,182,212,0.3)]">
-        ৳ {hourlyFee}/hr
-      </span>
+      <div className="absolute top-6 left-6 z-20">
+        <div className="relative group/pill overflow-hidden rounded-full backdrop-blur-md border border-white/20 bg-white/10 px-5 py-2 shadow-xl transition-all duration-300 hover:scale-105">
+          <div className="absolute inset-0 bg-linear-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover/pill:opacity-100 transition-opacity" />
+          <span className="relative flex items-center gap-1.5 text-sm font-bold text-white tracking-wide">
+            <span className="text-cyan-300 font-black">BDT</span>
+            {hourlyFee}
+            <span className="text-[10px] text-zinc-300 font-normal  opacity-80">/hr</span>
+          </span>
+        </div>
+      </div>
 
       <div className="absolute inset-x-0 bottom-0 px-6 pt-6 pb-10 flex flex-col justify-end z-20">
         <div className="transform transition-transform duration-500">
@@ -55,7 +61,7 @@ const TutorCard = ({ tutor }) => {
           </p>
         </div>
 
-        <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-[150px] group-hover:opacity-100 group-hover:mb-6">
+        <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-37.5 group-hover:opacity-100 group-hover:mb-6">
           <div className="grid grid-cols-2 gap-3 pt-1">
             <div className="flex items-center gap-2 text-zinc-300 text-xs font-medium">
               <GraduationCap className="h-4 w-4 text-cyan-400" /> {institution}

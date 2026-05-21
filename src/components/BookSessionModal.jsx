@@ -33,9 +33,9 @@ export function BookSessionModal({ tutor }) {
 
   const isEarly = currentDate < sessionDate;
 
-  let buttonText = "Book Tutors Session";
-  if (isFull) buttonText = "No available slots left";
-  else if (isEarly) buttonText = "Booking not available yet";
+  let buttonText = "BOOK TUTORS SESSION";
+  if (isFull) buttonText = "NO AVAILABLE SLOTS LEFT";
+  else if (isEarly) buttonText = "BOOKING NOT AVAILABLE YET";
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -115,7 +115,7 @@ export function BookSessionModal({ tutor }) {
       <DialogTrigger asChild>
         <Button
           disabled={isFull || isEarly}
-          className={`w-full mt-8 py-4 text-white font-bold text-base rounded-2xl shadow-lg transition-all duration-300 transform
+          className={`w-full mt-8 py-5 text-white font-bold text-base rounded-2xl shadow-lg transition-all duration-300 transform
             ${
               isFull || isEarly
                 ? "bg-zinc-400 dark:bg-zinc-800 cursor-not-allowed opacity-70"

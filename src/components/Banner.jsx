@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MousePointerClick } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
@@ -55,7 +55,7 @@ const Banner = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: "easeOut" }
+      transition: { duration: 0.7, ease: "easeOut" },
     },
   };
 
@@ -91,25 +91,29 @@ const Banner = () => {
                 <div className="absolute inset-0 bg-linear-to-r from-zinc-950/90 via-zinc-900/60 to-transparent" />
                 <div className="absolute inset-0 flex items-center">
                   <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-
                     <motion.div
                       className="max-w-2xl space-y-6"
                       variants={containerVariants}
                       initial="hidden"
                       animate={isActive ? "visible" : "hidden"}
                     >
-
                       <motion.div variants={itemVariants}>
                         <span className="inline-block rounded-full bg-cyan-500/20 px-3 py-1 text-sm font-semibold tracking-wider text-cyan-300 backdrop-blur-md">
                           #1 Tutor Booking Platform
                         </span>
                       </motion.div>
 
-                      <motion.h1 variants={itemVariants} className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+                      <motion.h1
+                        variants={itemVariants}
+                        className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
+                      >
                         {slide.title}
                       </motion.h1>
 
-                      <motion.p variants={itemVariants} className="max-w-xl text-lg text-zinc-300 sm:text-xl">
+                      <motion.p
+                        variants={itemVariants}
+                        className="max-w-xl text-lg text-zinc-300 sm:text-xl"
+                      >
                         {slide.description}
                       </motion.p>
 
@@ -129,13 +133,11 @@ const Banner = () => {
                               hover:cursor-pointer"
                           >
                             Find Your Tutor
-                            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                            <MousePointerClick className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                           </Button>
                         </Link>
                       </motion.div>
-
                     </motion.div>
-
                   </div>
                 </div>
               </div>
