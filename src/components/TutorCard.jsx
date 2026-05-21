@@ -26,82 +26,58 @@ const TutorCard = ({ tutor }) => {
   } = tutor;
 
   return (
-    <article className="group relative overflow-hidden rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 shadow-sm hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-500 flex flex-col">
-      <div className="relative h-60 w-full bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-100 dark:border-zinc-800 rounded-t-2xl overflow-hidden">
-        <span className="absolute left-0 top-0 z-20 rounded-br-xl bg-linear-to-br from-blue-600/70 to-cyan-500/70 backdrop-blur-md border-b border-r border-white/20 px-3.5 py-1.5 text-xs font-bold tracking-wider text-white shadow-sm flex items-center gap-1.5">
-          <GraduationCap className="h-3.5 w-3.5" />
-          VERIFIED
-        </span>
+    <article className="group relative h-105 w-full rounded-3xl hover:shadow-lg overflow-hidden bg-zinc-900">
+      <Image
+        src={imageUrl || "https://i.postimg.cc/8PxjBsmJ/aitutor.jpg"}
+        alt={tutorName}
+        fill
+        className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+      />
+      <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/60 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-95"></div>
 
-        <Image
-          src={imageUrl || "https://i.postimg.cc/8PxjBsmJ/aitutor.jpg"}
-          alt={tutorName}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+      {/* Fee Badge - Always Glassmorphic Gradient */}
+      <span className="absolute right-0 top-0 z-20 rounded-bl-2xl bg-linear-to-br from-cyan-500/60 to-white/20 backdrop-blur-md border-b border-l border-white/40 px-4 py-2.5 text-sm font-bold tracking-wider text-white shadow-[0_8px_30px_rgba(6,182,212,0.3)]">
+        ৳ {hourlyFee}/hr
+      </span>
 
-        <div className="absolute inset-0 bg-zinc-950/85 backdrop-blur-sm flex flex-col justify-center p-6 text-zinc-200 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-20">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <GraduationCap className="h-5 w-5 text-cyan-400 shrink-0" />
-              <span className="text-sm font-medium tracking-tight truncate">
-                {institution}
-              </span>
+      <div className="absolute inset-x-0 bottom-0 px-6 pt-6 pb-10 flex flex-col justify-end z-20">
+        <div className="transform transition-transform duration-500">
+          <p className="text-cyan-400 text-sm font-bold tracking-wider uppercase mb-2 flex items-center gap-1.5">
+            <BookOpen className="h-4 w-4" /> {subject}
+          </p>
+
+          <h3 className="text-2xl font-bold text-white tracking-tight mb-2">
+            {tutorName}
+          </h3>
+
+          <p className="text-zinc-300 text-sm flex items-center gap-1.5 mb-4">
+            <MapPin className="h-4 w-4" /> {location}
+          </p>
+        </div>
+
+        <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-[150px] group-hover:opacity-100 group-hover:mb-6">
+          <div className="grid grid-cols-2 gap-3 pt-1">
+            <div className="flex items-center gap-2 text-zinc-300 text-xs font-medium">
+              <GraduationCap className="h-4 w-4 text-cyan-400" /> {institution}
             </div>
-            <div className="flex items-center gap-3">
-              <Briefcase className="h-5 w-5 text-cyan-400 shrink-0" />
-              <span className="text-sm font-medium">{experience}</span>
+            <div className="flex items-center gap-2 text-zinc-300 text-xs font-medium">
+              <Briefcase className="h-4 w-4 text-cyan-400" /> {experience}
             </div>
-            <div className="flex items-center gap-3">
-              <Monitor className="h-5 w-5 text-cyan-400 shrink-0" />
-              <span className="text-sm font-medium">{teachingMode}</span>
+            <div className="flex items-center gap-2 text-zinc-300 text-xs font-medium">
+              <Monitor className="h-4 w-4 text-cyan-400" /> {teachingMode}
             </div>
-            <div className="flex items-start gap-3">
-              <Clock className="h-5 w-5 text-cyan-400 shrink-0 mt-0.5" />
-              <span className="text-sm font-medium leading-tight">
-                {availableDays} <br />{" "}
-                <span className="text-xs text-zinc-400 font-normal">
-                  {timeSlot}
-                </span>
-              </span>
+            <div className="flex items-center gap-2 text-zinc-300 text-xs font-medium">
+              <Clock className="h-4 w-4 text-cyan-400" /> {availableDays}
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="p-6 grow flex flex-col">
-        <span className="uppercase text-xs font-bold text-zinc-400 dark:text-zinc-500 tracking-wider mb-2 flex items-center gap-1.5">
-          <BookOpen className="h-3.5 w-3.5" />
-          {subject}
-        </span>
-
-        <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-3 truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-          {tutorName}
-        </h3>
-
-        <span className="flex items-start text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-6 grow">
-          <MapPin className="mr-1.5 h-4 w-4 text-cyan-500 shrink-0 mt-0.5" />
-          <span>{location}</span>
-        </span>
-
-        <div className="flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-4 mt-auto">
-          <div className="flex items-baseline gap-1">
-            <span className="text-xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">
-              ৳ {hourlyFee}
-            </span>
-            <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              /hr
-            </span>
-          </div>
-
-          <Link
-            href={`/tutors/${_id}`}
-            className="flex items-center gap-1.5 text-sm font-semibold text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors group/btn"
-          >
-            Book Session
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-          </Link>
-        </div>
+        <Link
+          href={`/tutors/${_id}`}
+          className="w-full py-3.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-bold flex items-center justify-center gap-2 shrink-0 mt-auto transition-all duration-300 hover:bg-linear-to-br hover:from-cyan-500/60 hover:to-white/20 hover:border-white/40 hover:shadow-[0_8px_30px_rgba(6,182,212,0.3)]"
+        >
+          Book Session <ArrowUpRight className="h-4 w-4" />
+        </Link>
       </div>
     </article>
   );
