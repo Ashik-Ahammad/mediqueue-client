@@ -4,7 +4,7 @@
 
 [![Client Side Live Preview](https://img.shields.io/badge/Live_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](https://mediqueue-client-tutor.vercel.app/)
 
-[![Server Side Live Preview](https://img.shields.io/badge/Live_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](https://mediqueue-server-livid.vercel.app/)
+[![Server Side Live Preview](https://img.shields.io/badge/Server_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](https://mediqueue-server-livid.vercel.app/)
 
 [![image.png](https://i.postimg.cc/cC8YmG8M/image.png)](https://postimg.cc/dZwLsX6L)
 
@@ -39,6 +39,7 @@ MediQueue is a modern full-stack tutor booking platform where users can explore 
 - Lottie React
 - Sonner Toast
 - Swiper.js
+- Lenis
 
 ## Backend
 
@@ -77,25 +78,6 @@ MediQueue is a modern full-stack tutor booking platform where users can explore 
 }
 ```
 
----
-
-# 📁 Folder Structure
-
-```bash
-mediqueue-client/
-├── app/
-├── components/
-├── hooks/
-├── lib/
-├── public/
-└── styles/
-
-mediqueue-server/
-├── routes/
-├── middleware/
-├── utils/
-└── index.js
-```
 
 ---
 
@@ -104,10 +86,48 @@ mediqueue-server/
 ## Server `.env`
 
 ```env
-PORT=8008
+PORT=8000
 MONGO_URI=your_mongodb_uri
 CLIENT_URL=your_client_url
 ```
+
+---
+
+
+# 📡 API Endpoints
+
+| Method | Endpoint | Description | Security |
+|--------|----------|-------------|----------|
+| POST | `/tutors` | Add a new tutor | Public |
+| GET | `/tutors` | Get all tutors with search & filters | Public |
+| GET | `/featured-tutors` | Get latest featured tutors | Public |
+| GET | `/tutors/:id` | Get tutor details | JWT Protected |
+| POST | `/bookings` | Create booking & decrease slot | JWT Protected |
+| GET | `/my-tutors/:userId` | Get tutors created by user | JWT Protected |
+| GET | `/bookings/:userId` | Get user bookings | JWT Protected |
+| PATCH | `/bookings/:id` | Cancel booking & restore slot | JWT Protected |
+| PATCH | `/tutors/:id` | Update tutor info | JWT Protected |
+| DELETE | `/tutors/:id` | Delete tutor & cancel bookings | JWT Protected |
+
+---
+
+# 🔒 Authentication & Security
+
+- JWT Token Verification Middleware
+- Protected API Routes
+- Secure Remote JWK Set Validation
+- MongoDB ObjectId Validation
+- Environment Variable Protection
+
+---
+
+# 🎨 UI & UX Highlights
+
+- Modern Glassmorphism Inspired Design
+- Fully Responsive Layout
+- Smooth Page Animations
+- Interactive User Experience
+- Accessible & Clean Interface
 
 ---
 
@@ -153,43 +173,6 @@ npm run dev
 ```bash
 node index.js
 ```
-
----
-
-# 📡 API Endpoints
-
-| Method | Endpoint | Description | Security |
-|--------|----------|-------------|----------|
-| POST | `/tutors` | Add a new tutor | Public |
-| GET | `/tutors` | Get all tutors with search & filters | Public |
-| GET | `/featured-tutors` | Get latest featured tutors | Public |
-| GET | `/tutors/:id` | Get tutor details | JWT Protected |
-| POST | `/bookings` | Create booking & decrease slot | JWT Protected |
-| GET | `/my-tutors/:userId` | Get tutors created by user | JWT Protected |
-| GET | `/bookings/:userId` | Get user bookings | JWT Protected |
-| PATCH | `/bookings/:id` | Cancel booking & restore slot | JWT Protected |
-| PATCH | `/tutors/:id` | Update tutor info | JWT Protected |
-| DELETE | `/tutors/:id` | Delete tutor & cancel bookings | JWT Protected |
-
----
-
-# 🔒 Authentication & Security
-
-- JWT Token Verification Middleware
-- Protected API Routes
-- Secure Remote JWK Set Validation
-- MongoDB ObjectId Validation
-- Environment Variable Protection
-
----
-
-# 🎨 UI & UX Highlights
-
-- Modern Glassmorphism Inspired Design
-- Fully Responsive Layout
-- Smooth Page Animations
-- Interactive User Experience
-- Accessible & Clean Interface
 
 ---
 
