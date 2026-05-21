@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme-provider";
-import LenisScroll from "@/components/LenisScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,19 +23,19 @@ export default function RootLayout({ children }) {
   return (
 
     <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
-      <body className={`${inter.className} flex flex-col bg-zinc-50 dark:bg-zinc-950`}>
+      <body
+        className={`${inter.className} min-h-full flex flex-col bg-zinc-50 dark:bg-zinc-950`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          <LenisScroll>
-            <Navbar />
-            <main className="grow">{children}</main>
-            <Footer />
-            <Toaster />
-          </LenisScroll>
+          <Navbar />
+          {children}
+          <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

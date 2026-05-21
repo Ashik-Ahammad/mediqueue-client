@@ -2,7 +2,7 @@
 
 # 🌐 Live Website
 
-[![Client Side Live Preview](https://img.shields.io/badge/Live_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](https://mediqueue-client-tutor.vercel.app/)
+[![Client Side Live Preview](https://img.shields.io/badge/Live_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](https://mediqueue-tutors.vercel.app/)
 
 [![Server Side Live Preview](https://img.shields.io/badge/Server_Preview-Visit_Now-000000?style=for-the-badge&logo=vercel)](https://mediqueue-server-livid.vercel.app/)
 
@@ -178,6 +178,6 @@ node index.js
 
 # 👨‍💻 Developer
 
-### Ashik Ahammad
+#### Ashik Ahammad
 
 
