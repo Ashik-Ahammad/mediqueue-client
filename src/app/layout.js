@@ -24,9 +24,7 @@ export default function RootLayout({ children }) {
   return (
 
     <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
-      <body
-        className={`${inter.className} min-h-full flex flex-col bg-zinc-50 dark:bg-zinc-950`}
-      >
+      <body className={`${inter.className} flex flex-col bg-zinc-50 dark:bg-zinc-950`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -35,7 +33,7 @@ export default function RootLayout({ children }) {
         >
           <LenisScroll>
             <Navbar />
-            <main>{children}</main>
+            <main className="grow">{children}</main>
             <Footer />
             <Toaster />
           </LenisScroll>
