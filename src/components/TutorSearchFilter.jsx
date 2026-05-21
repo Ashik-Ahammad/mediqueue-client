@@ -12,8 +12,12 @@ const TutorSearchFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const initialStart = searchParams.get("startDate") ? new Date(searchParams.get("startDate")) : null;
-  const initialEnd = searchParams.get("endDate") ? new Date(searchParams.get("endDate")) : null;
+  const initialStart = searchParams.get("startDate")
+    ? new Date(searchParams.get("startDate"))
+    : null;
+  const initialEnd = searchParams.get("endDate")
+    ? new Date(searchParams.get("endDate"))
+    : null;
 
   const [startDate, setStartDate] = useState(initialStart);
   const [endDate, setEndDate] = useState(initialEnd);
@@ -24,7 +28,9 @@ const TutorSearchFilter = () => {
     const formData = new FormData(e.target);
     const search = formData.get("search");
 
-    const formattedStartDate = startDate ? startDate.toISOString().split("T")[0] : "";
+    const formattedStartDate = startDate
+      ? startDate.toISOString().split("T")[0]
+      : "";
     const formattedEndDate = endDate ? endDate.toISOString().split("T")[0] : "";
 
     const params = new URLSearchParams(searchParams);
@@ -118,7 +124,7 @@ const TutorSearchFilter = () => {
       <motion.div variants={itemVariants} className="w-full md:w-auto">
         <Button
           type="submit"
-          className="h-11 px-8 bg-cyan-600 hover:bg-cyan-700 text-white w-full md:w-auto flex gap-2 items-center cursor-pointer transition-colors"
+          className="h-11 px-8 w-full md:w-auto flex gap-2 items-center cursor-pointer transition-all duration-300 bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 border-0"
         >
           <Search className="w-4 h-4" />
           Search

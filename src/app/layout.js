@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import LenisScroll from "@/components/LenisScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,10 +33,12 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          {children}
-          <Footer />
-          <Toaster />
+          <LenisScroll>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <Toaster />
+          </LenisScroll>
         </ThemeProvider>
       </body>
     </html>
