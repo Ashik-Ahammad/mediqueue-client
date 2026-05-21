@@ -126,30 +126,28 @@ export function BookSessionModal({ tutor }) {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-125 overflow-hidden p-0 border border-zinc-200/60 dark:border-zinc-800/60 shadow-2xl rounded-3xl bg-white dark:bg-zinc-950">
-        <div className="bg-zinc-50/80 dark:bg-zinc-900/40 pt-10 pb-6 px-8 flex flex-col items-center justify-center border-b border-zinc-100 dark:border-zinc-800/60">
-          <div className="w-50 h-24">
+      <DialogContent className="sm:max-w-125 w-[95vw] max-h-[90vh] overflow-y-auto p-0 border border-zinc-200/60 dark:border-zinc-800/60 shadow-2xl rounded-3xl bg-white dark:bg-zinc-950 hide-scrollbar">
+
+        <div className="bg-zinc-50/80 dark:bg-zinc-900/40 pt-6 pb-4 px-6 sm:pt-10 sm:pb-6 sm:px-8 flex flex-col items-center justify-center border-b border-zinc-100 dark:border-zinc-800/60 sticky top-0 z-10 backdrop-blur-md">
+          <div className="w-40 h-20 sm:w-50 sm:h-24">
             <Lottie animationData={calendarAnimation} loop={true} />
           </div>
-          <DialogTitle className="text-center text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+          <DialogTitle className="text-center text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-50 mt-2">
             Book Session
           </DialogTitle>
-          <DialogDescription className="text-center text-base text-zinc-500 dark:text-zinc-400">
+          <DialogDescription className="text-center text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
             Confirm your details to book a session with{" "}
             {tutor?.tutorName || "this tutor"}.
           </DialogDescription>
         </div>
 
-        <form onSubmit={onSubmit} className="space-y-6 px-8 py-8 bg-white dark:bg-zinc-950">
-          <FieldGroup className="space-y-5">
-            <Field className="mb-2 w-full">
-              <Label
-                htmlFor="tutor-id"
-                className="text-sm font-bold text-zinc-700 dark:text-zinc-300"
-              >
+        <form onSubmit={onSubmit} className="space-y-4 sm:space-y-6 px-6 sm:px-8 py-6 sm:py-8 bg-white dark:bg-zinc-950">
+          <FieldGroup className="space-y-4 sm:space-y-5">
+            <Field className="w-full">
+              <Label htmlFor="tutor-id" className="text-xs sm:text-sm font-bold text-zinc-700 dark:text-zinc-300">
                 Tutor ID
               </Label>
-              <div className="relative flex items-center">
+              <div className="relative flex items-center mt-1">
                 <Input
                   id="tutor-id"
                   name="tutorId"
@@ -159,17 +157,14 @@ export function BookSessionModal({ tutor }) {
                     navigator.clipboard.writeText(e.target.value);
                     toast.success("Tutor ID copied to clipboard!");
                   }}
-                  className="w-full h-12 pr-11 rounded-xl bg-zinc-50 dark:bg-zinc-900/30 border-zinc-200 dark:border-zinc-800 focus-visible:ring-0 select-all cursor-pointer hover:bg-zinc-100/70 dark:hover:bg-zinc-900 transition-colors text-zinc-900 dark:text-zinc-100 font-medium"
+                  className="w-full h-10 sm:h-12 pr-11 rounded-xl bg-zinc-50 dark:bg-zinc-900/30 border-zinc-200 dark:border-zinc-800 focus-visible:ring-0 select-all cursor-pointer hover:bg-zinc-100/70 dark:hover:bg-zinc-900 transition-colors text-zinc-900 dark:text-zinc-100 font-medium text-xs sm:text-sm"
                 />
                 <Clipboard className="absolute right-4 h-4 w-4 text-zinc-400 pointer-events-none" />
               </div>
             </Field>
 
-            <Field className="mb-2 w-full">
-              <Label
-                htmlFor="tutor-name"
-                className="text-sm font-semibold text-zinc-700 dark:text-zinc-300"
-              >
+            <Field className="w-full">
+              <Label htmlFor="tutor-name" className="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                 Tutor Name
               </Label>
               <Input
@@ -177,15 +172,12 @@ export function BookSessionModal({ tutor }) {
                 name="tutorName"
                 defaultValue={tutor?.tutorName || ""}
                 readOnly
-                className="w-full h-11 bg-zinc-50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus-visible:ring-0"
+                className="w-full h-10 sm:h-11 mt-1 bg-zinc-50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus-visible:ring-0 text-sm"
               />
             </Field>
 
-            <Field className="mb-2 w-full">
-              <Label
-                htmlFor="user-name"
-                className="text-sm font-semibold text-zinc-700 dark:text-zinc-300"
-              >
+            <Field className="w-full">
+              <Label htmlFor="user-name" className="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                 Student Name
               </Label>
               <Input
@@ -193,15 +185,12 @@ export function BookSessionModal({ tutor }) {
                 name="name"
                 defaultValue={user?.name || ""}
                 readOnly
-                className="w-full h-11 bg-zinc-50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus-visible:ring-0"
+                className="w-full h-10 sm:h-11 mt-1 bg-zinc-50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus-visible:ring-0 text-sm"
               />
             </Field>
 
-            <Field className="mb-2 w-full">
-              <Label
-                htmlFor="email"
-                className="text-sm font-semibold text-zinc-700 dark:text-zinc-300"
-              >
+            <Field className="w-full">
+              <Label htmlFor="email" className="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                 Email
               </Label>
               <Input
@@ -210,15 +199,12 @@ export function BookSessionModal({ tutor }) {
                 type="email"
                 defaultValue={user?.email || ""}
                 readOnly
-                className="w-full h-11 bg-zinc-50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus-visible:ring-0"
+                className="w-full h-10 sm:h-11 mt-1 bg-zinc-50 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 focus-visible:ring-0 text-sm"
               />
             </Field>
 
-            <Field className="mb-2 w-full">
-              <Label
-                htmlFor="phone"
-                className="text-sm font-semibold text-zinc-700 dark:text-zinc-300"
-              >
+            <Field className="w-full">
+              <Label htmlFor="phone" className="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                 Phone Number
               </Label>
               <Input
@@ -228,18 +214,14 @@ export function BookSessionModal({ tutor }) {
                 required
                 minLength={11}
                 maxLength={11}
-                className="w-full h-11 border-zinc-200 dark:border-zinc-800 focus-visible:ring-cyan-500/50"
+                className="w-full h-10 sm:h-11 mt-1 border-zinc-200 dark:border-zinc-800 focus-visible:ring-cyan-500/50 text-sm"
               />
             </Field>
           </FieldGroup>
 
-          <div className="mt-8 flex gap-3 sm:justify-end pb-4">
+          <div className="mt-6 sm:mt-8 flex flex-col-reverse sm:flex-row gap-3 sm:justify-end pb-2 sm:pb-4">
             <DialogClose asChild>
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full sm:w-32 h-11 cursor-pointer"
-              >
+              <Button type="button" variant="outline" className="w-full sm:w-32 h-11 cursor-pointer">
                 Cancel
               </Button>
             </DialogClose>

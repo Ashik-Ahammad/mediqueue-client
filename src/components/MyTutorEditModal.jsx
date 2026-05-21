@@ -6,7 +6,6 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -30,13 +29,12 @@ export function MyTutorEditModal({ tutor }) {
       const updatedData = Object.fromEntries(formData.entries());
 
       const { data: tokenData } = await authClient.token();
+      const jwtToken = tokenData?.token;
 
-  const jwtToken = tokenData?.token;
-
-  if (!jwtToken) {
-    toast.error('Authentication failed. Please login again.');
-    return;
-  }
+      if (!jwtToken) {
+        toast.error("Authentication failed. Please login again.");
+        return;
+      }
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${tutor._id}`, {
         method: "PATCH",
@@ -70,15 +68,15 @@ export function MyTutorEditModal({ tutor }) {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-3xl w-[95vw] max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Edit Tutor Profile</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-xl sm:text-2xl font-bold">Edit Tutor Profile</DialogTitle>
+          <DialogDescription className="text-sm">
             Make changes to your tutor profile here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={onSubmit} className="space-y-6 py-4">
+        <form onSubmit={onSubmit} className="space-y-6 py-2 sm:py-4">
           <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Field className="md:col-span-2">
               <Label htmlFor="tutorName" className="font-semibold text-zinc-700 dark:text-zinc-300">
@@ -89,7 +87,7 @@ export function MyTutorEditModal({ tutor }) {
                 name="tutorName"
                 defaultValue={tutor?.tutorName || ""}
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -103,7 +101,7 @@ export function MyTutorEditModal({ tutor }) {
                 type="url"
                 defaultValue={tutor?.imageUrl || ""}
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -116,7 +114,7 @@ export function MyTutorEditModal({ tutor }) {
                 name="subject"
                 defaultValue={tutor?.subject || ""}
                 required
-                className="mt-1 flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:border-zinc-800 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300"
+                className="mt-1 flex h-11 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:border-zinc-800 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300"
               >
                 <option value="" disabled hidden>Select subject</option>
                 <option value="Mathematics">Mathematics</option>
@@ -138,7 +136,7 @@ export function MyTutorEditModal({ tutor }) {
                 defaultValue={tutor?.availableDays || ""}
                 placeholder="e.g. Sun - Thu, Sat/Mon"
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -152,7 +150,7 @@ export function MyTutorEditModal({ tutor }) {
                 defaultValue={tutor?.timeSlot || ""}
                 placeholder="e.g. 5:00 PM - 8:00 PM"
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -166,7 +164,7 @@ export function MyTutorEditModal({ tutor }) {
                 type="number"
                 defaultValue={tutor?.hourlyFee || ""}
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -180,7 +178,7 @@ export function MyTutorEditModal({ tutor }) {
                 type="number"
                 defaultValue={tutor?.totalSlot || ""}
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -194,7 +192,7 @@ export function MyTutorEditModal({ tutor }) {
                 type="date"
                 defaultValue={tutor?.startDate || ""}
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -208,7 +206,7 @@ export function MyTutorEditModal({ tutor }) {
                 defaultValue={tutor?.institution || ""}
                 placeholder="e.g. Dhaka University"
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -222,7 +220,7 @@ export function MyTutorEditModal({ tutor }) {
                 defaultValue={tutor?.experience || ""}
                 placeholder="e.g. 3 Years / Fresh Graduate"
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -236,7 +234,7 @@ export function MyTutorEditModal({ tutor }) {
                 defaultValue={tutor?.location || ""}
                 placeholder="e.g. Savar, Dhaka"
                 required
-                className="mt-1"
+                className="mt-1 h-11"
               />
             </Field>
 
@@ -249,7 +247,7 @@ export function MyTutorEditModal({ tutor }) {
                 name="teachingMode"
                 defaultValue={tutor?.teachingMode || ""}
                 required
-                className="mt-1 flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:border-zinc-800 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300"
+                className="mt-1 flex h-11 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:border-zinc-800 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300"
               >
                 <option value="" disabled hidden>Select mode</option>
                 <option value="Online">Online</option>
@@ -259,14 +257,14 @@ export function MyTutorEditModal({ tutor }) {
             </Field>
           </FieldGroup>
 
-          <div className="gap-2 sm:gap-0 pt-4 border-t">
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
             <DialogClose asChild>
-              <Button type="button" variant="outline" className="w-full sm:w-auto hover:cursor-pointer">
+              <Button type="button" variant="outline" className="w-full sm:w-32 h-11 hover:cursor-pointer">
                 Cancel
               </Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button type="submit" className="w-full sm:w-auto ml-2 hover:cursor-pointer">
+              <Button type="submit" className="w-full sm:w-auto h-11 hover:cursor-pointer">
                 Save changes
               </Button>
             </DialogClose>
